@@ -9,6 +9,9 @@
 
   <name>learn-nifi</name>
   <url>http://maven.apache.org</url>
+  <modules>
+    <module>nifi/processor/fahrenheit-to-celsius</module>
+  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
