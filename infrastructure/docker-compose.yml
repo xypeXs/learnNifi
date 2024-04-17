@@ -3,7 +3,10 @@ services:
   nifi:
     image: apache/nifi:1.25.0
     container_name: nifi
+    volumes:
+      - "./data/nifi/extensions:/opt/nifi/nifi-current/extensions"
     environment:
       - NIFI_WEB_HTTP_PORT=8080
+      - NIFI_NAR_LIBRARY_AUTOLOAD_DIRECTORY=/opt/nifi/nifi-current/lib/extensions
     ports:
       - "8080:8080"

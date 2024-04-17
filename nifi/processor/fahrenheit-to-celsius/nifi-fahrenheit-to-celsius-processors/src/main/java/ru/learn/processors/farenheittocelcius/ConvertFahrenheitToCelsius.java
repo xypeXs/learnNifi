@@ -41,16 +41,21 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Tags({"example"})
-@CapabilityDescription("Fahrenheit-to-Celsius Processor")
+@Tags({"learn"})
+@CapabilityDescription("Converts Fahrenheit temperature to Celsius")
 @SeeAlso({})
-@ReadsAttributes({@ReadsAttribute(attribute = "", description = "")})
-@WritesAttributes({@WritesAttribute(attribute = "", description = "")})
-public class FahrenheitToCelsiusProcessor extends AbstractProcessor {
+@ReadsAttributes({
+        @ReadsAttribute(attribute = ConvertFahrenheitToCelsius.TEMPERATURE_UNIT_ATTRIBUTE, description = "Единцы измерения температуры"),
+        @ReadsAttribute(attribute = ConvertFahrenheitToCelsius.TEMPERATURE_ATTRIBUTE, description = "Значение температуры"),
+})
+@WritesAttributes({
+        @WritesAttribute(attribute = ConvertFahrenheitToCelsius.TEMPERATURE_ATTRIBUTE, description = "Значение температуры")
+})
+public class ConvertFahrenheitToCelsius extends AbstractProcessor {
 
-    private static final String TEMPERATURE_UNIT_ATTRIBUTE = "temperature_unit";
-    private static final String TEMPERATURE_ATTRIBUTE = "temperature";
-    private static final String FAHRENHEIT_IDENTIFIER = "°F";
+    public static final String TEMPERATURE_UNIT_ATTRIBUTE = "temperature_unit";
+    public static final String TEMPERATURE_ATTRIBUTE = "temperature";
+    public static final String FAHRENHEIT_IDENTIFIER = "°F";
 
     public static final Relationship SUCCESS_REL = new Relationship.Builder()
             .name("success")
@@ -116,8 +121,10 @@ public class FahrenheitToCelsiusProcessor extends AbstractProcessor {
     }
 
     private BigDecimal toCelsius(BigDecimal temperatureFahrenheitValue) {
-        BigDecimal constantToSubtract = BigDecimal.valueOf(32);
-        BigDecimal constantToMultiply = BigDecimal.valueOf(5).setScale(10).divide(BigDecimal.valueOf(9), RoundingMode.HALF_UP);
-        return temperatureFahrenheitValue.subtract(constantToSubtract).multiply(constantToMultiply);
+        return temperatureFahrenheitValue
+                .setScale(1, RoundingMode.HALF_UP)
+                .subtract(BigDecimal.valueOf(32))
+                .multiply(BigDecimal.valueOf(5))
+                .divide(BigDecimal.valueOf(9), RoundingMode.HALF_UP);
     }
 }

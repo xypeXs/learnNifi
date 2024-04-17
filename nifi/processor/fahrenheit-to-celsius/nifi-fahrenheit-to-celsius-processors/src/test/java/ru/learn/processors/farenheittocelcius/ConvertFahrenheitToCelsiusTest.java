@@ -21,13 +21,13 @@ import org.apache.nifi.util.TestRunners;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class FahrenheitToCelsiusProcessorTest {
+public class ConvertFahrenheitToCelsiusTest {
 
     private TestRunner testRunner;
 
     @BeforeEach
     public void init() {
-        testRunner = TestRunners.newTestRunner(FahrenheitToCelsiusProcessor.class);
+        testRunner = TestRunners.newTestRunner(ConvertFahrenheitToCelsius.class);
     }
 
     @Test

@@ -19,7 +19,7 @@
     <parent>
         <groupId>ru.learn</groupId>
         <artifactId>fahrenheit-to-celsius</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <properties>
@@ -28,6 +28,7 @@
 
 
     <artifactId>nifi-fahrenheit-to-celsius-processors</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <dependencies>

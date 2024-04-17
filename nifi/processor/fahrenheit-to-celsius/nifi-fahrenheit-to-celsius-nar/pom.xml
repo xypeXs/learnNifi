@@ -19,18 +19,18 @@
     <parent>
         <groupId>ru.learn</groupId>
         <artifactId>fahrenheit-to-celsius</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
     </parent>
 
     <artifactId>nifi-fahrenheit-to-celsius-nar</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>nar</packaging>
 
     <dependencies>
         <dependency>
             <groupId>ru.learn</groupId>
             <artifactId>nifi-fahrenheit-to-celsius-processors</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 
