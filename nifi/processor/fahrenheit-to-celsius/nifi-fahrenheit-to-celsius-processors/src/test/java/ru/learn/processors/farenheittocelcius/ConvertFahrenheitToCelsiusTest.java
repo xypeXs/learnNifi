@@ -18,8 +18,11 @@ package ru.learn.processors.farenheittocelcius;
 
 import org.apache.nifi.util.TestRunner;
 import org.apache.nifi.util.TestRunners;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
 
 public class ConvertFahrenheitToCelsiusTest {
 
@@ -32,7 +35,19 @@ public class ConvertFahrenheitToCelsiusTest {
 
     @Test
     public void testProcessor() {
+        testCelsius();
+    }
 
+    public void testCelsius() {
+        Assertions.assertEquals(BigDecimal.valueOf(-9.4), ConvertFahrenheitToCelsius.toCelsius(BigDecimal.valueOf(15)));
+        Assertions.assertEquals(BigDecimal.valueOf(-9.3), ConvertFahrenheitToCelsius.toCelsius(BigDecimal.valueOf(15.3)));
+        Assertions.assertEquals(BigDecimal.valueOf(-0.6), ConvertFahrenheitToCelsius.toCelsius(BigDecimal.valueOf(31)));
+
+        Assertions.assertEquals(BigDecimal.valueOf(0.0), ConvertFahrenheitToCelsius.toCelsius(BigDecimal.valueOf(32)));
+
+        Assertions.assertEquals(BigDecimal.valueOf(2.2), ConvertFahrenheitToCelsius.toCelsius(BigDecimal.valueOf(36)));
+        Assertions.assertEquals(BigDecimal.valueOf(11.0), ConvertFahrenheitToCelsius.toCelsius(BigDecimal.valueOf(51.8)));
+        Assertions.assertEquals(BigDecimal.valueOf(37.8), ConvertFahrenheitToCelsius.toCelsius(BigDecimal.valueOf(100)));
     }
 
 }

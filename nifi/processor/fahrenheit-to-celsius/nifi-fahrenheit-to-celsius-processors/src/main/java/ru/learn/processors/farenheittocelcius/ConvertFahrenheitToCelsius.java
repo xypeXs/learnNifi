@@ -55,7 +55,9 @@ public class ConvertFahrenheitToCelsius extends AbstractProcessor {
 
     public static final String TEMPERATURE_UNIT_ATTRIBUTE = "temperature_unit";
     public static final String TEMPERATURE_ATTRIBUTE = "temperature";
+
     public static final String FAHRENHEIT_IDENTIFIER = "°F";
+    public static final String CELSIUS_IDENTIFIER = "°C";
 
     public static final Relationship SUCCESS_REL = new Relationship.Builder()
             .name("success")
@@ -107,20 +109,20 @@ public class ConvertFahrenheitToCelsius extends AbstractProcessor {
             String temperatureUnit = flowFile.getAttribute(TEMPERATURE_UNIT_ATTRIBUTE);
             String temperatureValue = flowFile.getAttribute(TEMPERATURE_ATTRIBUTE);
 
-            if (StringUtils.isBlank(temperatureUnit) || StringUtils.isBlank(temperatureValue) || !FAHRENHEIT_IDENTIFIER.equalsIgnoreCase(temperatureUnit)) {
-                session.transfer(flowFile, SUCCESS_REL);
+            if (StringUtils.isNotBlank(temperatureUnit) && StringUtils.isNotBlank(temperatureValue) && FAHRENHEIT_IDENTIFIER.equalsIgnoreCase(temperatureUnit)) {
+                BigDecimal temperatureFahrenheitValue = new BigDecimal(temperatureValue);
+                BigDecimal temperatureCelsiusValue = toCelsius(temperatureFahrenheitValue);
+
+                session.putAttribute(flowFile, TEMPERATURE_ATTRIBUTE, temperatureCelsiusValue.toString());
+                session.putAttribute(flowFile, TEMPERATURE_UNIT_ATTRIBUTE, CELSIUS_IDENTIFIER);
             }
-
-            BigDecimal temperatureFahrenheitValue = new BigDecimal(temperatureValue);
-            BigDecimal temperatureCelsiusValue = toCelsius(temperatureFahrenheitValue);
-
-            session.putAttribute(flowFile, TEMPERATURE_ATTRIBUTE, temperatureCelsiusValue.toString());
+            session.transfer(flowFile, SUCCESS_REL);
         } catch (Exception e) {
             session.transfer(flowFile, FAILURE_REL);
         }
     }
 
-    private BigDecimal toCelsius(BigDecimal temperatureFahrenheitValue) {
+    public static BigDecimal toCelsius(BigDecimal temperatureFahrenheitValue) {
         return temperatureFahrenheitValue
                 .setScale(1, RoundingMode.HALF_UP)
                 .subtract(BigDecimal.valueOf(32))
